@@ -1,0 +1,834 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Indian Artisans Platform</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&family=Poppins:wght@300;600&display=swap" rel="stylesheet">
+
+  <style>
+    body { font-family: 'Poppins', sans-serif; background: #fafafa; }
+
+    /* Navbar */
+    .navbar-brand { font-weight: 700; font-size: 1.5rem; }
+
+    /* Hero */
+    .hero {
+      background: linear-gradient(to right, #1a1a1a, #2b2b2b);
+      color: white;
+      min-height: 70vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 40px;
+      border-radius: 12px;
+      margin: 12px;
+    }
+    .hero h1 {
+      font-size: 4rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      background: linear-gradient(45deg, #f3b542, #ef456d, #5f0fde);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 0.2rem;
+    }
+    .hero h3 { font-family: 'Playfair Display', serif; font-size: 2rem; margin:0; }
+    .hero h5 { font-family: 'Playfair Display', serif; font-size: 1.1rem; font-style: italic; color: #ccc; margin-top:6px; }
+
+    /* Scrolling Photos */
+    .scroll-container { width: 100%; overflow: hidden; height: 170px; margin-top: 20px; }
+    .scroll-content {
+      display: flex;
+      gap: 20px;
+      animation: scroll 25s linear infinite;
+    }
+    .scroll-content img {
+      border-radius: 12px;
+      height: 150px;
+      width: 250px;
+      object-fit: cover;
+      flex-shrink: 0;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+    }
+    @keyframes scroll {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+
+    /* Cards */
+    .category-card:hover { transform: scale(1.05); transition: 0.3s; }
+    .artisan-card img { border-radius: 50%; width: 100px; height: 100px; object-fit:cover; }
+
+    /* Footer */
+    footer { background:#222; color:#ddd; padding:20px 0; }
+    footer a { color: #f3b542; text-decoration: none; }
+    footer a:hover { text-decoration: underline; }
+
+    /* product card image fix */
+    .product-img { height: 200px; object-fit: cover; border-radius: 8px; }
+
+    /* admin badges */
+    .badge-pending { background: #ffc107; color: #222; }
+    .badge-approved { background: #28a745; color: white; }
+    .small-muted { font-size: .85rem; color: #666; }
+    .section-title { font-family: 'Playfair Display', serif; font-size: 1.5rem; margin-bottom: .75rem; }
+  </style>
+</head>
+<body>
+
+<!-- Google Fonts duplicate link (kept) -->
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow-sm sticky-top">
+  <div class="container">
+    <!-- Brand / Logo -->
+    <a class="navbar-brand fw-bold fs-3" href="#home" style="font-family: 'Playfair Display', serif;
+      background: linear-gradient(45deg, #f3b542, #ef456d, #5f0fde);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;">
+      Elegant Artisans
+    </a>
+
+    <!-- Toggle for mobile -->
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menu">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <!-- Links -->
+    <div class="collapse navbar-collapse" id="menu">
+      <ul class="navbar-nav ms-auto mb-2 mb-lg-0" style="font-family: 'Poppins', sans-serif; font-weight: 500;">
+        <li class="nav-item"><a class="nav-link active nav-link-animate" href="#home">Home</a></li>
+        <li class="nav-item"><a class="nav-link nav-link-animate" href="#categories">Categories</a></li>
+        <li class="nav-item"><a class="nav-link nav-link-animate" href="#artisansSection">Artisans</a></li>
+        <li class="nav-item"><a class="nav-link nav-link-animate" href="#stories">Stories</a></li>
+        <li class="nav-item"><a class="nav-link nav-link-animate" href="#contact">Contact</a></li>
+      </ul>
+
+      <!-- Sign In Button -->
+      <a href="#signinSection" class="btn gradient-btn ms-lg-3 fw-semibold px-4 rounded-pill">Sign In</a>
+    </div>
+  </div>
+</nav>
+
+<style>
+/* Nav Link Aesthetic Hover */
+.nav-link {
+  position: relative;
+  color: #ddd !important;
+  transition: color 0.3s ease;
+}
+.nav-link:hover {
+  color: #f3b542 !important;
+}
+.nav-link-animate::after {
+  content: "";
+  position: absolute;
+  left: 0; bottom: 0;
+  width: 0; height: 2px;
+  background: linear-gradient(45deg, #f3b542, #ef456d, #5f0fde);
+  transition: width 0.3s ease;
+}
+.nav-link-animate:hover::after {
+  width: 100%;
+}
+
+/* Gradient Button */
+.gradient-btn {
+  background: linear-gradient(45deg, #f3b542, #ef456d, #5f0fde);
+  color: white;
+  border: none;
+  transition: 0.4s ease;
+}
+.gradient-btn:hover {
+  filter: brightness(1.15);
+  box-shadow: 0 4px 15px rgba(239, 69, 109, 0.5);
+}
+</style>
+
+<!-- HERO -->
+<section id="home" class="hero d-flex align-items-center">
+  <div class="container">
+    <div class="row align-items-center">
+      <div class="col-md-6 d-flex flex-column justify-content-center text-start">
+        <h1 class="hero-title">ELEGANT</h1>
+        <h3 class="hero-subtitle">Artisans</h3>
+        <h5 class="hero-tagline"><u>Handmade stories from India’s heart to your home!!!</u></h5>
+        <p class="hero-description mt-3">
+          Elevate Your Space with Timeless Décor.<br>
+          Discover exquisite wall art, elegant tabletop accents,
+          spiritual idols, stylish organizers, planters,
+          and ambient lighting — all from authentic rural artisans.
+        </p>
+        <div class="mt-3">
+          <a class="btn gradient-btn me-2" href="#categories">Shop Categories</a>
+          <a class="btn btn-outline-light" href="#artisansSection">Meet Artisans</a>
+        </div>
+      </div>
+
+      <!-- Right Side (Carousel) -->
+      <div class="col-md-6">
+        <div id="heroCarousel" class="carousel slide" data-bs-ride="carousel">
+          <div class="carousel-inner rounded shadow-lg">
+            <!-- If external images fail, we try fallback images from picsum -->
+            <div class="carousel-item active">
+              <img src="https://indian-artisans.com/wp-content/uploads/2025/03/Indian-Artisans-karigary-Slider-5-scaled.jpg"
+ class="d-block w-100 hero-img" alt="Craft 1">
+            </div>
+            <div class="carousel-item">
+              <img src="https://indian-artisans.com/wp-content/uploads/2025/03/Indian-Artisans-karigary-Slider-1-scaled.jpg" class="d-block w-100 hero-img" alt="Craft 2">
+            </div>
+            <div class="carousel-item">
+              <img src="https://indian-artisans.com/wp-content/uploads/2025/03/Indian-Artisans-karigary-Slider-3-scaled.jpg" class="d-block w-100 hero-img" alt="Craft 3">
+            </div>
+            <div class="carousel-item">
+              <img src="https://indian-artisans.com/wp-content/uploads/2025/03/Indian-Artisans-karigary-Slider-4-scaled.jpg" class="d-block w-100 hero-img" alt="Craft 4">
+            </div>
+            <div class="carousel-item">
+              <img src=https://indian-artisans.com/wp-content/uploads/2025/03/Indian-Artisans-karigary-Slider-2-scaled.jpg class="d-block w-100 hero-img" alt="Craft 5">
+            </div>
+          </div>
+          <button class="carousel-control-prev" type="button" data-bs-target="#heroCarousel" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon"></span>
+          </button>
+          <button class="carousel-control-next" type="button" data-bs-target="#heroCarousel" data-bs-slide="next">
+            <span class="carousel-control-next-icon"></span>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Scrolling Photos strip -->
+    <div class="scroll-container mt-4">
+      <div class="scroll-content">
+        <img src="https://static.toiimg.com/photo/msid-92655990,width-96,height-65.cms" alt="">
+        <img src="http://islamicartsmagazine.com/images/uploads/magazine/Artisan-Mohamed-Ben-Mohamed-Khair,-Syria,-Sadaf-wooden-Crafts.jpg
+" alt="">
+        <img src="https://miradorlife.com/wp-content/uploads/2021/08/header-6.png" alt="">
+        <img src="https://www.boontoon.com/blog/wp-content/uploads/2017/07/Keralas-Beautiful-Eco-friendly-Coconut-Shell-Handicrafts-1-1024x531.jpg" alt="">
+        <img src="https://tse1.mm.bing.net/th/id/OIP.zQmSN5OHfLcS3LcNeigdpQHaE7?pid=Api&P=0&h=180
+" alt="">
+        <img src="https://i.pinimg.com/736x/45/fc/d4/45fcd43e579d5d25c007c8249dfa2396.jpg" alt="">
+        <!-- duplicate for smooth loop -->
+        <img src="https://www.siliconindia.com/news/newsimages/special/v02Zl3m5.jpeg" alt="">
+        <img src="https://miradorlife.com/wp-content/uploads/2021/08/header-6.png" alt="">
+        <img src="https://media.cnn.com/api/v1/images/stellar/prod/170324164259-india-embroidery.jpg?q=w_1110,c_fill" alt="">
+
+
+
+
+<img src="https://static.toiimg.com/photo/msid-92655990,width-96,height-65.cms" alt="">
+        <img src="http://islamicartsmagazine.com/images/uploads/magazine/Artisan-Mohamed-Ben-Mohamed-Khair,-Syria,-Sadaf-wooden-Crafts.jpg
+" alt="">
+        <img src="https://miradorlife.com/wp-content/uploads/2021/08/header-6.png" alt="">
+        <img src="https://www.boontoon.com/blog/wp-content/uploads/2017/07/Keralas-Beautiful-Eco-friendly-Coconut-Shell-Handicrafts-1-1024x531.jpg" alt="">
+        <img src="https://tse1.mm.bing.net/th/id/OIP.zQmSN5OHfLcS3LcNeigdpQHaE7?pid=Api&P=0&h=180
+" alt="">
+        <img src="https://i.pinimg.com/736x/45/fc/d4/45fcd43e579d5d25c007c8249dfa2396.jpg" alt="">
+        <!-- duplicate for smooth loop -->
+        <img src="https://www.siliconindia.com/news/newsimages/special/v02Zl3m5.jpeg" alt="">
+        <img src="https://miradorlife.com/wp-content/uploads/2021/08/header-6.png" alt="">
+        <img src="https://media.cnn.com/api/v1/images/stellar/prod/170324164259-india-embroidery.jpg?q=w_1110,c_fill" alt="">
+
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Categories -->
+<section id="categories" class="py-5 container">
+  <h2 class="text-center mb-4 section-title">Shop by Categories</h2>
+  <div class="row g-4">
+    <div class="col-md-3">
+      <div class="card category-card shadow-sm text-center p-3">
+        <img src="https://static.theprint.in/wp-content/uploads/2022/03/Parchinkari_white_marble_coaster_set_from_Agra_India-e1647108150853.jpg" alt="">
+        <h6 class="mt-2">Handicrafts</h6>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="card category-card shadow-sm text-center p-3">
+        <img src="https://ebnw.net/wp-content/uploads/2020/11/Blue-Pottery-1.jpg" class="card-img-top" alt="">
+        <h6 class="mt-2">Pottery</h6>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="card category-card shadow-sm text-center p-3">
+        <img src="https://fashinza.com/textile/wp-content/uploads/2021/10/shutterstock_548366068-1.jpg" alt="">
+        <h6 class="mt-2">Textiles</h6>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="card category-card shadow-sm text-center p-3">
+        <img src="https://images.hindustantimes.com/img/2022/09/08/1600x900/raimond-klavins-AO5HvvqJ93Q-unsplash_1662629470561_1662629493045_1662629493045.jpg" class="card-img-top" alt="">
+        <h6 class="mt-2">Paintings</h6>
+      </div>
+    </div>
+  </div>
+
+  <!-- Approved products grid (dynamically rendered) -->
+  <hr class="my-5">
+  <h3 class="mb-3">Featured / Approved Crafts</h3>
+  <div id="approvedGrid" class="row g-4"></div>
+</section>
+
+<!-- Artisans Section with Upload & Signup -->
+<section id="artisansSection" class="py-5 bg-light">
+  <div class="container">
+    <h2 class="text-center mb-4 section-title">Meet Our Artisans & Upload</h2>
+    <div class="row">
+      <div class="col-md-6">
+        <p>Meet some featured artisans. Artisans can sign up and submit products for admin verification before they appear on the main site.</p>
+        <div class="row g-3">
+          <div class="col-md-6">
+            <div class="card artisan-card text-center p-4 shadow-sm">
+              <img src="https://miradorlife.com/wp-content/uploads/2020/10/Banner-1.jpg" alt="Artisan">
+              <h5 class="mt-3">Ravi Kumar</h5>
+              <p class="small-muted">Pottery Artist from Rajasthan</p>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="card artisan-card text-center p-4 shadow-sm">
+              <img src="https://1.bp.blogspot.com/-HlJTgxcnX-w/YNRdo9OTMaI/AAAAAAAAVPM/gJrL-lOYqIIlJkZ2-n8V6UP027LxvyeoACLcBGAsYHQ/s0/Image%2B2.jpg" alt="Artisan">
+              <h5 class="mt-3">Anjali Sharma</h5>
+              <p class="small-muted">Handloom Weaver from Assam</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Signup + Product Submit -->
+      <div class="col-md-6">
+        <div class="card p-4 shadow-sm">
+          <h5>Artisan Signup</h5>
+          <form id="artisanSignupForm" class="row g-2" onsubmit="handleArtisanSignup(event)">
+            <div class="col-12"><input id="a_name" class="form-control" placeholder="Full name" required></div>
+            <div class="col-md-6"><input id="a_email" type="email" class="form-control" placeholder="Email" required></div>
+            <div class="col-md-6"><input id="a_village" class="form-control" placeholder="Village / Town" required></div>
+            <div class="col-12"><textarea id="a_bio" class="form-control" placeholder="Short bio / craft details"></textarea></div>
+            <div class="col-12 text-end"><button class="btn btn-warning">Sign Up (for verification)</button></div>
+          </form>
+        </div>
+
+        <div class="card p-4 mt-3 shadow-sm">
+          <h5>Submit Product (Artisan)</h5>
+          <form id="productSubmitForm" class="row g-2" onsubmit="submitProduct(event)">
+            <div class="col-12"><input id="p_artisan_email" type="email" class="form-control" placeholder="Your registered email" required></div>
+            <div class="col-md-6"><input id="p_name" class="form-control" placeholder="Product name" required></div>
+            <div class="col-md-6"><input id="p_price" type="number" class="form-control" placeholder="Price (INR)" required></div>
+            <div class="col-12"><input id="p_img" class="form-control" placeholder="Image URL (or leave blank for placeholder)"></div>
+            <div class="col-12"><textarea id="p_desc" class="form-control" placeholder="Short description"></textarea></div>
+            <div class="col-12 text-end"><button class="btn btn-primary">Submit for Approval</button></div>
+          </form>
+          <p class="small-muted mt-2">Submitted products will appear in Admin → Pending Approvals.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Stories -->
+<section id="stories" class="py-5 container">
+  <h2 class="text-center mb-4 section-title">Artisan Stories</h2>
+  <div class="row g-4">
+    <div class="col-md-6">
+      <div class="ratio ratio-16x9">
+        <iframe src="https://www.youtube.com/embed/e-vfLZ129q4" allowfullscreen></iframe>
+      </div>
+      <p class="mt-2">Ravi shares how his family preserved pottery traditions.</p>
+    </div>
+    <div class="col-md-6">
+      <div class="ratio ratio-16x9">
+        <iframe src="https://www.youtube.com/embed/5e_Bu76yCEo" allowfullscreen></iframe>
+      </div>
+      <p class="mt-2">Anjali explains her weaving journey from childhood.</p>
+    </div>
+  </div>
+</section>
+
+<!-- Sign In + Delivery Signup -->
+<section id="signinSection" class="py-5 bg-light">
+  <div class="container">
+    <div class="row g-4">
+      <div class="col-md-6">
+        <h3 class="section-title">Artisan Login (demo)</h3>
+        <p class="small-muted">Artisan records are verified by admin — use the Signup form above to register.</p>
+        <div class="card p-4 shadow-sm">
+          <form id="dummyLoginForm" onsubmit="event.preventDefault(); alert('This demo page uses email-based registration & admin verification. Use Artisan Signup to create an account.');">
+            <div class="mb-2"><input type="email" id="loginEmail" class="form-control" placeholder="Email"></div>
+            <div class="mb-2"><input type="password" class="form-control" placeholder="Password (demo)"></div>
+            <button class="btn btn-dark w-100">Sign In</button>
+          </form>
+        </div>
+      </div>
+
+      <div class="col-md-6">
+        <h3 class="section-title">Delivery Partner Signup</h3>
+        <div class="card p-4 shadow-sm">
+          <form id="deliveryForm" onsubmit="handleDeliverySignup(event)">
+            <div class="mb-2"><input id="d_name" class="form-control" placeholder="Full Name" required></div>
+            <div class="mb-2"><input id="d_aadhar" class="form-control" placeholder="Aadhaar Number" required></div>
+            <div class="mb-2"><input id="d_mobile" class="form-control" placeholder="Mobile Number" required></div>
+            <div class="mb-2"><input id="d_address" class="form-control" placeholder="Address" required></div>
+            <div class="text-end"><button class="btn btn-success">Register as Delivery Partner</button></div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Contact -->
+<section id="contact" class="py-5 container">
+  <h2 class="text-center mb-4 section-title">Contact Us</h2>
+  <form class="row g-3">
+    <div class="col-md-6"><input type="text" class="form-control" placeholder="Your Name"></div>
+    <div class="col-md-6"><input type="email" class="form-control" placeholder="Your Email"></div>
+    <div class="col-12"><textarea class="form-control" rows="4" placeholder="Message"></textarea></div>
+    <div class="col-12 text-center"><button class="btn btn-warning px-5">Send</button></div>
+  </form>
+</section>
+
+<!-- Admin Dashboard (modal-like anchor at bottom) -->
+<section id="admin" class="py-5 container">
+  <h2 class="text-center mb-4 section-title">Admin Dashboard</h2>
+  <div class="card p-4 shadow-sm">
+    <div class="row gy-3">
+      <div class="col-md-6">
+        <input id="adminPassword" type="password" class="form-control" placeholder="Admin password (demo: admin123)">
+      </div>
+      <div class="col-md-6 text-end">
+        <button class="btn btn-primary" onclick="adminLogin()">Login as Admin</button>
+        <button class="btn btn-outline-secondary" onclick="logoutAdmin()">Logout</button>
+      </div>
+    </div>
+
+    <div id="adminArea" class="mt-4 d-none">
+      <div class="row">
+        <div class="col-md-4">
+          <h5>Pending Products</h5>
+          <ul id="pendingProductsList" class="list-group mb-3"></ul>
+        </div>
+        <div class="col-md-4">
+          <h5>Approved Products</h5>
+          <ul id="approvedProductsList" class="list-group mb-3"></ul>
+        </div>
+        <div class="col-md-4">
+          <h5>Artisans (Pending / Verified)</h5>
+          <ul id="artisansList" class="list-group mb-3"></ul>
+        </div>
+      </div>
+
+      <div class="row mt-3">
+        <div class="col-md-6">
+          <h5>Delivery Partners</h5>
+          <ul id="deliveryPartnersList" class="list-group mb-3"></ul>
+        </div>
+        <div class="col-md-6">
+          <h5>Add Product (Admin)</h5>
+          <form id="adminAddProductForm" onsubmit="handleAdminAddProduct(event)">
+            <div class="mb-2"><input id="admin_p_name" class="form-control" placeholder="Product name" required></div>
+            <div class="mb-2"><input id="admin_p_price" type="number" class="form-control" placeholder="Price" required></div>
+            <div class="mb-2"><input id="admin_p_img" class="form-control" placeholder="Image URL (optional)"></div>
+            <div class="mb-2"><textarea id="admin_p_desc" class="form-control" placeholder="Short description"></textarea></div>
+            <div><button class="btn btn-warning">Add Product</button></div>
+          </form>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer class="text-center mt-5">
+  <div class="container py-4">
+    <p>&copy; 2025 Indian Artisans. All Rights Reserved.</p>
+    <p><a href="#">Facebook</a> | <a href="#">Instagram</a> | <a href="#">YouTube</a></p>
+  </div>
+</footer>
+
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+<script>
+/* ========= Data keys and initial load ========= */
+const LS_KEYS = {
+  approved: 'ia_approvedProducts',
+  pending: 'ia_pendingProducts',
+  deliveries: 'ia_deliveries',
+  artisansPending: 'ia_artisansPending',
+  artisansVerified: 'ia_artisansVerified'
+};
+
+let approved = JSON.parse(localStorage.getItem(LS_KEYS.approved) || '[]');
+let pending = JSON.parse(localStorage.getItem(LS_KEYS.pending) || '[]');
+let deliveries = JSON.parse(localStorage.getItem(LS_KEYS.deliveries) || '[]');
+let artisansPending = JSON.parse(localStorage.getItem(LS_KEYS.artisansPending) || '[]');
+let artisansVerified = JSON.parse(localStorage.getItem(LS_KEYS.artisansVerified) || '[]');
+
+function persist() {
+  localStorage.setItem(LS_KEYS.approved, JSON.stringify(approved));
+  localStorage.setItem(LS_KEYS.pending, JSON.stringify(pending));
+  localStorage.setItem(LS_KEYS.deliveries, JSON.stringify(deliveries));
+  localStorage.setItem(LS_KEYS.artisansPending, JSON.stringify(artisansPending));
+  localStorage.setItem(LS_KEYS.artisansVerified, JSON.stringify(artisansVerified));
+}
+
+/* ========= Utility functions ========= */
+function uid(prefix = '') { return prefix + Math.random().toString(36).slice(2,9); }
+function imageOrPlaceholder(url, seed=uid('s')) {
+  url = (url || '').trim();
+  if (!url) return `https://picsum.photos/seed/${seed}/600/400`;
+  return url;
+}
+
+/* ========= Rendering ========= */
+function renderApprovedGrid() {
+  const grid = document.getElementById('approvedGrid');
+  grid.innerHTML = '';
+  if (!approved.length) {
+    grid.innerHTML = `<div class="col-12 text-muted">No approved crafts yet. Admin approval pending for newly submitted crafts.</div>`;
+    return;
+  }
+  approved.forEach(p => {
+    grid.innerHTML += `
+      <div class="col-md-4">
+        <div class="card shadow-sm h-100">
+          <img src="${imageOrPlaceholder(p.img, p._id)}" class="product-img card-img-top" alt="${p.name}">
+          <div class="card-body d-flex flex-column">
+            <h5 class="card-title">${p.name}</h5>
+            <p class="small-muted mb-2">By: ${p.artisanName || 'Unknown'}</p>
+            <p class="card-text">${p.desc || ''}</p>
+            <div class="mt-auto d-flex justify-content-between align-items-center">
+              <div class="fw-bold">₹ ${p.price || '-'}</div>
+              <button class="btn btn-sm btn-outline-danger" onclick="adminDeleteApproved('${p._id}')">Delete</button>
+            </div>
+          </div>
+        </div>
+      </div>`;
+  });
+}
+
+function renderAdminLists() {
+  // pending products
+  const pendUl = document.getElementById('pendingProductsList');
+  pendUl.innerHTML = '';
+  if (pending.length === 0) {
+    pendUl.innerHTML = `<li class="list-group-item text-muted">No pending products.</li>`;
+  } else {
+    pending.forEach((p, i) => {
+      pendUl.innerHTML += `<li class="list-group-item">
+          <div class="d-flex justify-content-between align-items-start">
+            <div>
+              <div class="fw-semibold">${p.name}</div>
+              <div class="small-muted">By: ${p.artisanName} (${p.artisanEmail})</div>
+              <div class="small-muted">${p.desc || ''}</div>
+            </div>
+            <div class="text-end">
+              <img src="${imageOrPlaceholder(p.img, p._id)}" style="width:120px;height:80px;object-fit:cover;border-radius:6px" class="mb-2"><br>
+              <button class="btn btn-sm btn-success mb-1" onclick="approveProduct('${p._id}')">Approve</button>
+              <button class="btn btn-sm btn-danger" onclick="rejectProduct('${p._id}')">Reject</button>
+            </div>
+          </div>
+        </li>`;
+    });
+  }
+
+  // approved products list (for admin controls)
+  const apprUl = document.getElementById('approvedProductsList');
+  apprUl.innerHTML = '';
+  if (approved.length === 0) {
+    apprUl.innerHTML = `<li class="list-group-item text-muted">No approved products.</li>`;
+  } else {
+    approved.forEach(p => {
+      apprUl.innerHTML += `<li class="list-group-item d-flex justify-content-between align-items-center">
+        <div><strong>${p.name}</strong><div class="small-muted">By: ${p.artisanName || 'Admin'}</div></div>
+        <div><button class="btn btn-sm btn-outline-danger" onclick="adminDeleteApproved('${p._id}')">Delete</button></div>
+      </li>`;
+    });
+  }
+
+  // artisans lists
+  const artUl = document.getElementById('artisansList');
+  artUl.innerHTML = '';
+  if (!artisansPending.length && !artisansVerified.length) {
+    artUl.innerHTML = `<li class="list-group-item text-muted">No artisan records.</li>`;
+  } else {
+    // pending
+    artisansPending.forEach(a => {
+      artUl.innerHTML += `<li class="list-group-item">
+        <div class="d-flex justify-content-between">
+          <div>
+            <div class="fw-semibold">${a.name}</div>
+            <div class="small-muted">${a.email} • ${a.village}</div>
+          </div>
+          <div>
+            <button class="btn btn-sm btn-success me-1" onclick="approveArtisan('${a._id}')">Verify</button>
+            <button class="btn btn-sm btn-danger" onclick="rejectArtisan('${a._id}')">Reject</button>
+          </div>
+        </div>
+      </li>`;
+    });
+    // verified
+    artisansVerified.forEach(a => {
+      artUl.innerHTML += `<li class="list-group-item d-flex justify-content-between align-items-center">
+        <div>
+          <div class="fw-semibold">${a.name} <span class="badge bg-success ms-2">Verified</span></div>
+          <div class="small-muted">${a.email} • ${a.village}</div>
+        </div>
+        <div><button class="btn btn-sm btn-outline-danger" onclick="unverifyArtisan('${a._id}')">Unverify</button></div>
+      </li>`;
+    });
+  }
+
+  // deliveries
+  const delUl = document.getElementById('deliveryPartnersList');
+  delUl.innerHTML = '';
+  if (!deliveries.length) {
+    delUl.innerHTML = `<li class="list-group-item text-muted">No registered delivery partners.</li>`;
+  } else {
+    deliveries.forEach(d => {
+      delUl.innerHTML += `<li class="list-group-item">
+        <div><strong>${d.name}</strong> <span class="small-muted">• ${d.mobile}</span></div>
+        <div class="small-muted">Aadhaar: ${d.aadhar} • ${d.address}</div>
+      </li>`;
+    });
+  }
+}
+
+/* ========= Actions ========= */
+
+// Artisan signup
+function handleArtisanSignup(e) {
+  e.preventDefault();
+  const name = document.getElementById('a_name').value.trim();
+  const email = document.getElementById('a_email').value.trim();
+  const village = document.getElementById('a_village').value.trim();
+  const bio = document.getElementById('a_bio').value.trim();
+
+  // Do not duplicate verified or pending
+  const alreadyVerified = artisansVerified.find(a => a.email === email);
+  const alreadyPending = artisansPending.find(a => a.email === email);
+
+  if (alreadyVerified) {
+    alert('You are already verified. You can submit products directly using your email in the product form.');
+    document.getElementById('artisanSignupForm').reset();
+    return;
+  }
+  if (alreadyPending) {
+    alert('Your signup is pending verification by admin.');
+    document.getElementById('artisanSignupForm').reset();
+    return;
+  }
+
+  const artisan = { _id: uid('art_'), name, email, village, bio, createdAt: Date.now() };
+  artisansPending.push(artisan);
+  persist();
+  alert('Signup submitted. Admin will verify your account.');
+  document.getElementById('artisanSignupForm').reset();
+  renderAdminLists();
+}
+
+// Product submit by artisan (goes to pending)
+function submitProduct(e) {
+  e.preventDefault();
+  const artisanEmail = document.getElementById('p_artisan_email').value.trim();
+  const name = document.getElementById('p_name').value.trim();
+  const price = document.getElementById('p_price').value.trim();
+  const img = document.getElementById('p_img').value.trim();
+  const desc = document.getElementById('p_desc').value.trim();
+
+  // Check if artisan is at least registered (verified or pending)
+  const isVerified = artisansVerified.find(a => a.email === artisanEmail);
+  const isPendingArt = artisansPending.find(a => a.email === artisanEmail);
+
+  if (!isVerified && !isPendingArt) {
+    if (!confirm('This email is not registered as an artisan. Submit anyway and admin will review?')) {
+      return;
+    }
+  }
+
+  const product = {
+    _id: uid('p_'),
+    artisanEmail,
+    artisanName: (isVerified && isVerified.name) || (isPendingArt && isPendingArt.name) || 'Unknown',
+    name,
+    price,
+    img,
+    desc,
+    createdAt: Date.now()
+  };
+
+  pending.push(product);
+  persist();
+  alert('Product submitted for admin approval.');
+  document.getElementById('productSubmitForm').reset();
+  renderAdminLists();
+}
+
+// Delivery signup
+function handleDeliverySignup(e) {
+  e.preventDefault();
+  const name = document.getElementById('d_name').value.trim();
+  const aadhar = document.getElementById('d_aadhar').value.trim();
+  const mobile = document.getElementById('d_mobile').value.trim();
+  const address = document.getElementById('d_address').value.trim();
+
+  if (!name || !aadhar || !mobile || !address) {
+    alert('Please fill all fields.');
+    return;
+  }
+
+  const d = { _id: uid('del_'), name, aadhar, mobile, address, createdAt: Date.now() };
+  deliveries.push(d);
+  persist();
+  alert('Delivery partner registered. Admin will see your details.');
+  document.getElementById('deliveryForm').reset();
+  renderAdminLists();
+}
+
+/* ========= Admin flows ========= */
+
+let adminLoggedIn = false;
+function adminLogin() {
+  const pw = document.getElementById('adminPassword').value;
+  if (pw === 'admin123') {
+    adminLoggedIn = true;
+    document.getElementById('adminArea').classList.remove('d-none');
+    alert('Admin logged in (demo).');
+    renderAdminLists();
+  } else {
+    alert('Incorrect admin password.');
+  }
+}
+function logoutAdmin() {
+  adminLoggedIn = false;
+  document.getElementById('adminArea').classList.add('d-none');
+  document.getElementById('adminPassword').value = '';
+}
+
+/* Product approval/rejection */
+function approveProduct(pid) {
+  if (!adminLoggedIn) { alert('Please login as admin to approve.'); return; }
+  const idx = pending.findIndex(x => x._id === pid);
+  if (idx === -1) return;
+  const p = pending[idx];
+  approved.push(p);
+  pending.splice(idx, 1);
+  persist();
+  renderAdminLists(); renderApprovedGrid();
+  alert('Product approved and now visible on main page.');
+}
+function rejectProduct(pid) {
+  if (!adminLoggedIn) { alert('Please login as admin to reject.'); return; }
+  const idx = pending.findIndex(x => x._id === pid);
+  if (idx === -1) return;
+  if (!confirm('Reject this product?')) return;
+  pending.splice(idx, 1);
+  persist(); renderAdminLists();
+}
+
+/* Admin delete approved */
+function adminDeleteApproved(pid) {
+  if (!adminLoggedIn) { alert('Please login as admin to delete.'); return; }
+  const idx = approved.findIndex(x => x._id === pid);
+  if (idx === -1) return;
+  if (!confirm('Delete this approved product?')) return;
+  approved.splice(idx,1);
+  persist(); renderAdminLists(); renderApprovedGrid();
+}
+
+/* Artisans verify / reject / unverify */
+function approveArtisan(aid) {
+  if (!adminLoggedIn) { alert('Please login as admin to verify artisans.'); return; }
+  const idx = artisansPending.findIndex(a => a._id === aid);
+  if (idx === -1) return;
+  const a = artisansPending[idx];
+  artisansPending.splice(idx,1);
+  artisansVerified.push(a);
+  persist(); renderAdminLists();
+  alert(`${a.name} has been verified as an artisan.`);
+}
+function rejectArtisan(aid) {
+  if (!adminLoggedIn) { alert('Please login as admin to reject artisans.'); return; }
+  const idx = artisansPending.findIndex(a => a._id === aid);
+  if (idx === -1) return;
+  if (!confirm('Reject this artisan signup?')) return;
+  artisansPending.splice(idx,1);
+  persist(); renderAdminLists();
+}
+function unverifyArtisan(aid) {
+  if (!adminLoggedIn) { alert('Please login as admin to unverify.'); return; }
+  const idx = artisansVerified.findIndex(a => a._id === aid);
+  if (idx === -1) return;
+  const a = artisansVerified[idx];
+  artisansVerified.splice(idx,1);
+  artisansPending.push(a); // move back to pending for review
+  persist(); renderAdminLists();
+}
+
+/* Admin add product directly */
+function handleAdminAddProduct(e) {
+  e.preventDefault();
+  if (!adminLoggedIn) { alert('Login as admin to add product'); return; }
+  const name = document.getElementById('admin_p_name').value.trim();
+  const price = document.getElementById('admin_p_price').value.trim();
+  const img = document.getElementById('admin_p_img').value.trim();
+  const desc = document.getElementById('admin_p_desc').value.trim();
+  const p = { _id: uid('p_'), artisanName: 'Admin', artisanEmail: 'admin@site', name, price, img, desc, createdAt: Date.now() };
+  approved.push(p);
+  persist();
+  document.getElementById('adminAddProductForm').reset();
+  renderAdminLists(); renderApprovedGrid();
+  alert('Product added by admin and visible on main page.');
+}
+
+/* ========= initial populate with a few demo items (only if empty) ========= */
+function seedDemo() {
+  if (!approved.length && !pending.length && !artisansPending.length && !artisansVerified.length) {
+    // demo verified artisan
+    const demoArt = { _id: uid('art_'), name: 'Radha Handloom', email: 'radha@example.com', village: 'Kundapur', bio: 'Handloom weaver', createdAt: Date.now() };
+    artisansVerified.push(demoArt);
+
+    const demo1 = { _id: uid('p_'), artisanName: demoArt.name, artisanEmail: demoArt.email, name: 'Handloom Scarf', price: '1200', img: 'https://i.pinimg.com/originals/f4/c6/52/f4c652a8ed9bfe44ceadca2d45fe7eac.jpg', desc: 'Handwoven cotton scarf', createdAt: Date.now() };
+    const demo2 = { _id: uid('p_'), artisanName: demoArt.name, artisanEmail: demoArt.email, name: 'Cotton Throw', price: '2400', img: 'https://i5.walmartimages.com/asr/5974ac6b-bf0f-4202-a806-e31e43b7cfa6_5.5c198cbc1607a16f0d59550966ae4873.jpeg', desc: 'Traditional throw blanket', createdAt: Date.now() };
+
+    approved.push(demo1, demo2);
+
+    persist();
+  }
+}
+
+/* ========= initial run ========= */
+seedDemo();
+renderApprovedGrid();
+renderAdminLists();
+
+/* ========= simple hash-based navigation for nicer UX ========= */
+window.addEventListener('hashchange', () => {
+  const h = location.hash.replace('#','');
+  if (!h) return;
+  // scroll to element
+  const el = document.getElementById(h);
+  if (el) el.scrollIntoView({behavior: 'smooth', block: 'start'});
+});
+
+/* Expose some functions for buttons in markup */
+window.approveProduct = approveProduct;
+window.rejectProduct = rejectProduct;
+window.adminDeleteApproved = adminDeleteApproved;
+window.approveArtisan = approveArtisan;
+window.rejectArtisan = rejectArtisan;
+window.unverifyArtisan = unverifyArtisan;
+window.adminLogin = adminLogin;
+window.logoutAdmin = logoutAdmin;
+</script>
+</body>
+</html>
